@@ -9,7 +9,7 @@ $('#crawler-status').on('click', '.js-link', function(){
 function processCrawlerURL()
 {
     var url = $('input[name="url"]').val();
-    var urlId = url.replace(/\/|:|\./g, '');
+    var urlId = url.replace(/["'&=?.:/]/g, '');
     var depth = $('input[name="depth"]').val() || 0;
     if ($('#'+urlId+'_'+depth).length)
     {
