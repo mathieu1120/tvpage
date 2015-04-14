@@ -1,0 +1,105 @@
+#crawler-form
+{
+    width: 360px;
+    font-size: 0;
+    display: inline-block;
+    vertical-align: top;
+}
+
+label
+{
+    width: 100px;
+    display: inline-block;
+    font-size: 15px;
+}
+
+select
+{
+    width: 257px;
+    height: 35px;
+    margin: 5px 0;
+}
+
+input
+{
+    margin: 5px 0;
+    height: 25px;
+}
+
+input[type="text"]
+{
+    width: 250px;
+}
+
+input[type="submit"]
+{
+    margin-left: 100px;
+}
+
+#crawler-status
+{
+    margin-left: 50px;
+    border: 1px solid black;
+    border-radius: 3px;
+    width: 500px;
+    display: inline-block;
+    height: 120px;
+    overflow: auto;
+    padding: 5px;
+}
+
+#crawler-status p
+{
+    margin: 0;
+    font-size: 13px;
+}
+
+#crawler-results
+{
+    min-height: 400px;
+    width: 100%;
+    display: block;
+}
+
+ul
+{
+    margin: 0;
+    padding: 0;
+}
+
+ul li
+{
+    margin-bottom: 15px;
+}
+
+.result-block
+{
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+    height: 300px;
+    overflow: auto;
+    padding: 5px;
+}
+
+.js-link
+{
+    color: blue;
+    cursor: pointer;
+}
+
+.pieData
+{
+    display: none;
+}
+
+.canvas-div
+{
+    width: 300px;
+    height: 150px;
+    float: right;
+}
+
+.canvas-div span
+{
+    display: block;
+}
