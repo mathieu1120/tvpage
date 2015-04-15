@@ -9,8 +9,8 @@ $('#crawler-status').on('click', '.js-link', function(){
 function processCrawlerURL()
 {
     var url = $('input[name="url"]').val();
-    var urlId = url.replace(/["'&=?.:\/]/g, '');
-    var depth = $('input[name="depth"]').val() || 0;
+    var urlId = url.replace(/[^_\-a-zA-Z0-9]/g, '');
+    var depth = parseInt($('input[name="depth"]').val()) || 0;
     if ($('#'+urlId+'_'+depth).length)
     {
 	scrollToId(urlId+'_'+depth);
@@ -42,6 +42,8 @@ function processCrawlerURL()
 function informUser(text, id)
 {
     var status = $('#crawler-status');
+    var lt = /</g, gt = />/g, ap = /'/g, ic = /"/g;
+    text = text.replace(lt, "&lt;").replace(gt, "&gt;").replace(ap, "&#39;").replace(ic, "&#34;");
     status.append('<p>'+text+(id != undefined ? ' <span class="js-link" rel="'+id+'">Scroll to result</span>': '')+'</p>');
 }
 
@@ -59,7 +61,7 @@ function scrollToId(id)
 function displayPie(id)
 {
     var pieElement = $('#'+id).find('.pieData');
-    var pieValue = parseInt(pieElement.attr('rel'));
+    var pieValue = parseFloat(pieElement.attr('rel'));
     var otherValue = (100 - pieValue);
     var pieData = [
 	{
@@ -82,6 +84,6 @@ function displayPie(id)
 	window.myPie = new Chart(ctx).Pie(pieData);
     }
     else
-	$('#'+id+' .canvas-div').html('No Links were found.');
+	$('#'+id+' .canvas-div').html('No Links were found');
     
 }

@@ -15,7 +15,7 @@ class Crawl
   public function __construct($url, $depth)
   {
     $this->url = $url;
-    $this->depth = $depth;
+    $this->depth = (int)$depth;
   }
 
   private function _getLastDirInURL($url, $href)
@@ -52,25 +52,23 @@ class Crawl
     if (!@$dom->loadHTMLFile($url))
     return array();
     $anchors = $dom->getElementsByTagName('a');
+
     foreach ($anchors as $element)
     {
       $href = $element->getAttribute('href');
+      if (!$href)
+      continue;
       if (stripos($href, 'http') !== 0)
       {
         $parts = parse_url($url);
-
         if ($href[0] != '/')
         $href = $parts['scheme'].'://'.$this->_getLastDirInURL(str_replace($parts['scheme'].'://', '',$url), $href);
+        else if ($href[0] == '/' && isset($href[1]) && $href[1] == '/')
+        $href = $parts['scheme'].':'.$href;
         else
         {
           $path = '/' . ltrim($href, '/');
-          $href = $parts['scheme'].'://';
-          if (isset($parts['user']) && isset($parts['pass']))
-          $href .= $parts['user'].':'.$parts['pass'].'@';
-          $href .= $parts['host'];
-          if (isset($parts['port']))
-          $href .= ':'.$parts['port'];
-          $href .= $path;
+          $href = $parts['scheme'].'://'.(isset($parts['user']) && isset($parts['pass']) ? $parts['user'].':'.$parts['pass'].'@' : '').$parts['host'].(isset($parts['port']) ? ':'.$parts['port'] : '').$path;
         }
         while (in_array(substr($href, -1), array('#', '/')))
         $href = substr($href, 0, -1);
@@ -93,6 +91,10 @@ class Crawl
     }
     return array_unique($links);
   }
+
+  /*
+  Breadth-first search algorithme
+   */
 
   public function getAllLinks()
   {
@@ -134,6 +136,7 @@ class Crawl
   }
 
   /*
+  // pre- order algorithme
   public function getAllLinks($url = '', $depth = 0)
   {
   //if (self::MAX_PAGE_VISITED < $this->pageVisited)

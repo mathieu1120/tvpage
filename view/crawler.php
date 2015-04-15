@@ -4,7 +4,7 @@
     <select id="previous-url"><option>Select...</option>
       <?php
       foreach ($viewVars['previous_url'] as $url)
-      echo '<option value="'.$url.'">'.$url.'</option>';
+      echo '<option value="'.dp($url).'">'.dp($url).'</option>';
       ?>
     </select>
     <label>URL:</label>

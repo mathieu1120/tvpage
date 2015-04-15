@@ -42,6 +42,7 @@ function d($object, $die = true)
   if ($die)
   die();
 }
+
 function dp($string) //display proctect
 {
   return htmlspecialchars($string);

@@ -1,33 +1,33 @@
 <?php
 
-echo '<h2>'.$viewVars['given-url'].' - Depth: '.$viewVars['given-depth'].'</h2>';
-echo '<p>'.$viewVars['page-visited'].' page'.($viewVars['page-visited'] == 1 ? '' : 's').' visited.</p>';
+echo '<h2>'.dp($viewVars['given-url']).' - Depth: '.(int)$viewVars['given-depth'].'</h2>';
+echo '<p>'.(int)$viewVars['page-visited'].' page'.($viewVars['page-visited'] == 1 ? '' : 's').' visited.</p>';
 echo '<div class="canvas-div">Domain name Presence:<canvas class="canvas"></canvas></div>';
 echo '<ul>';
 foreach ($viewVars['urls'] as $url => $details)
 {
-  echo '<li>'.$url.' - Link Depth: '.$details['depth'].'<br/>';
+  echo '<li>'.dp($url).' - Link Depth: '.(int)$details['depth'].'<br/>';
   if ($details['links'])
   {
-    echo '<select><option>URL in '.$url.'</option>';
+    echo '<select><option>URL in '.dp($url).'</option>';
     foreach ($details['links'] as $link)
-    echo '<option value="'.$link.'">'.$link.'</option>';
+    echo '<option value="'.dp($link).'">'.dp($link).'</option>';
     echo '</select>';
   }
   else
-  echo 'No Links on that page.';
+  echo '<i>No "a" tag with valid "href" attributes were found on that page.<br/>The page can also be a redirection page.<br/>The page might not exist.</i>';
   echo '</li>';
 }
 echo '</ul>';
 
 $highest = array_sum($viewVars['domains']);
-$highestPresence = array('domain' => '', 'percent' => 0);
-foreach ($viewVars['domains'] as $domain => $number)
+$percent = 0;
+$host = '';
+$parts = parse_url($viewVars['given-url']);
+if (isset($parts['host']) && $parts['host'] && isset($viewVars['domains'][$parts['host']]))
 {
-  if (($percent = $number * 100 / $highest) > $highestPresence['percent'])
-  {
-    $highestPresence['domain'] = $domain;
-    $highestPresence['percent'] = $percent;
-  }
+  $percent = $viewVars['domains'][$parts['host']] * 100 / $highest;
+  $host = $parts['host'];
 }
-echo '<div class="pieData" rel="'.floor($highestPresence['percent']).'">'.$highestPresence['domain'].'</div>';
+
+echo '<div class="pieData" rel="'.(float)$percent.'">'.dp($host).'</div>';

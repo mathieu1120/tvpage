@@ -72,6 +72,11 @@ ul li
     margin-bottom: 15px;
 }
 
+ul li i
+{
+    font-size: 13px;
+}
+
 .result-block
 {
     border: 1px solid #eee;
