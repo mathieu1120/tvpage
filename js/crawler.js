@@ -9,7 +9,7 @@ $('#crawler-status').on('click', '.js-link', function(){
 function processCrawlerURL()
 {
     var url = $('input[name="url"]').val();
-    var urlId = url.replace(/["'&=?.:/]/g, '');
+    var urlId = url.replace(/["'&=?.:\/]/g, '');
     var depth = $('input[name="depth"]').val() || 0;
     if ($('#'+urlId+'_'+depth).length)
     {
@@ -18,6 +18,7 @@ function processCrawlerURL()
     }
     
     informUser(url+': Crawling started, please wait...');
+    $('#crawler-results').append('<div id="'+urlId+'_'+depth+'" class="result-block">Please wait....<br/>This can take a while.</div>');
     var start = new Date().getTime();
     $.ajax({url: 'ajax.php',
 	    method: 'POST',
@@ -46,8 +47,7 @@ function informUser(text, id)
 
 function displayLinks(id, data)
 {
-    var results = $('#crawler-results');
-    results.append('<div id="'+id+'" class="result-block">'+data+'</div>');
+    $('#'+id).html(data);
     displayPie(id);
 }
 
@@ -77,6 +77,6 @@ function displayPie(id)
     ];
     
     var ctx = $('#'+id+' .canvas')[0].getContext("2d");
-    $('#'+id+' .canvas').after('<span style="color:#F7464A">'+pieElement.text()+'</span><span style="color: #46BFBD">Others</span>')
+    $('#'+id+' .canvas').after('<span style="color:#F7464A">URL from host</span><span style="color: #46BFBD">URL outside host</span>')
     window.myPie = new Chart(ctx).Pie(pieData);
 }

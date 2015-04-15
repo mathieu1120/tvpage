@@ -1,6 +1,7 @@
 <?php
 
 echo '<h2>'.$viewVars['given-url'].' - Depth: '.$viewVars['given-depth'].'</h2>';
+echo '<p>'.$viewVars['page-visited'].' page'.($viewVars['page-visited'] == 1 ? '' : 's').' visited.</p>';
 echo '<div class="canvas-div">Domain name Presence:<canvas class="canvas"></canvas></div>';
 echo '<ul>';
 foreach ($viewVars['urls'] as $url => $details)
