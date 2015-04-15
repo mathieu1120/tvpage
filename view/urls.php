@@ -6,10 +6,17 @@ echo '<div class="canvas-div">Domain name Presence:<canvas class="canvas"></canv
 echo '<ul>';
 foreach ($viewVars['urls'] as $url => $details)
 {
-  echo '<li>'.$url.' - Link Depth: '.$details['depth'].'<br/><select><option>URL in '.$url.'</option>';
-  foreach ($details['links'] as $link)
-  echo '<option value="'.$link.'">'.$link.'</option>';
-  echo '</select></li>';
+  echo '<li>'.$url.' - Link Depth: '.$details['depth'].'<br/>';
+  if ($details['links'])
+  {
+    echo '<select><option>URL in '.$url.'</option>';
+    foreach ($details['links'] as $link)
+    echo '<option value="'.$link.'">'.$link.'</option>';
+    echo '</select>';
+  }
+  else
+  echo 'No Links on that page.';
+  echo '</li>';
 }
 echo '</ul>';
 

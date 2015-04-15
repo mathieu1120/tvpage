@@ -66,17 +66,22 @@ function displayPie(id)
 	    value: pieValue,
 	    color:"#F7464A",
 	    highlight: "#FF5A5E",
-	    label: pieElement.text()
+	    label: pieElement.text()+'(%)'
 	},
 	{
 	    value: otherValue,
 	    color: "#46BFBD",
 	    highlight: "#5AD3D1",
-	    label: "Others"
+	    label: "Others (%)"
 	}
     ];
+    if (pieValue > 0)
+    {
+	var ctx = $('#'+id+' .canvas')[0].getContext("2d");
+	$('#'+id+' .canvas').after('<span style="color:#F7464A">URL from host</span><span style="color: #46BFBD">URL outside host</span>')
+	window.myPie = new Chart(ctx).Pie(pieData);
+    }
+    else
+	$('#'+id+' .canvas-div').html('No Links were found.');
     
-    var ctx = $('#'+id+' .canvas')[0].getContext("2d");
-    $('#'+id+' .canvas').after('<span style="color:#F7464A">URL from host</span><span style="color: #46BFBD">URL outside host</span>')
-    window.myPie = new Chart(ctx).Pie(pieData);
 }

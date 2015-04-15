@@ -10,7 +10,7 @@ class Crawl
   public $domains = array();
   public $pageVisited = 0;
 
-  const MAX_PAGE_VISITED = 800;
+  const MAX_PAGE_VISITED = 600;
   
   public function __construct($url, $depth)
   {
@@ -18,34 +18,69 @@ class Crawl
     $this->depth = $depth;
   }
 
+  private function _getLastDirInURL($url, $href)
+  {
+    $hrefArray = explode('/', $href);
+    $urlArray = array_reverse(explode('/', $url));
+    $i = 0;
+    if (strpos($urlArray[0], '.'))
+    unset($urlArray[$i++]);
+
+    foreach ($hrefArray as $key => $dir)
+    {
+      if ($dir == '..')
+      {
+        if (isset($urlArray[$i]))
+        {
+          unset($urlArray[$i++]);
+          unset($hrefArray[$key]);
+        }
+      }
+      else if ($dir == '.')
+      unset($hrefArray[$key]);
+    }
+
+    return implode('/', array_reverse($urlArray)).'/'.implode('/', $hrefArray);
+  }
+
   private function _getLinksFromUrl($url)
   {
     $links = array();
-
     $dom = new DOMDocument();
-    @$dom->loadHTMLFile($url);
     $this->pageVisited++;
+
+    if (!@$dom->loadHTMLFile($url))
+    return array();
     $anchors = $dom->getElementsByTagName('a');
     foreach ($anchors as $element)
     {
       $href = $element->getAttribute('href');
       if (stripos($href, 'http') !== 0)
       {
-        $path = '/' . ltrim($href, '/');
-
         $parts = parse_url($url);
-        $href = $parts['scheme'].'://';
-        if (isset($parts['user']) && isset($parts['pass']))
-        $href .= $parts['user'].':'.$parts['pass'].'@';
-        
-        $href .= $parts['host'];
-        if (isset($parts['port']))
-        $href .= ':'.$parts['port'];
-          
-        $href .= $path;
+
+        if ($href[0] != '/')
+        $href = $parts['scheme'].'://'.$this->_getLastDirInURL(str_replace($parts['scheme'].'://', '',$url), $href);
+        else
+        {
+          $path = '/' . ltrim($href, '/');
+          $href = $parts['scheme'].'://';
+          if (isset($parts['user']) && isset($parts['pass']))
+          $href .= $parts['user'].':'.$parts['pass'].'@';
+          $href .= $parts['host'];
+          if (isset($parts['port']))
+          $href .= ':'.$parts['port'];
+          $href .= $path;
+        }
+        while (in_array(substr($href, -1), array('#', '/')))
+        $href = substr($href, 0, -1);
       }
       else
-      $parts = parse_url($href);
+      {
+        while (in_array(substr($href, -1), array('#', '/')))
+        $href = substr($href, 0, -1);
+        $parts = parse_url($href);
+      }
 
       if ($parts && isset($parts['host']))
       {
@@ -67,11 +102,13 @@ class Crawl
       if ($i == 0)
       {
         $links = $this->_getLinksFromUrl($this->url);
+        if (!$links)
+        return false;
         $this->urls[$this->url] = array('depth' => $i, 'links' => $links);
         foreach ($links as $l)
         $this->depths[$i + 1][$l] = true;
       }
-      else
+      else if (isset($this->depths[$i]))
       {
         foreach ($this->depths[$i] as $link => $bool)
         {
@@ -82,6 +119,7 @@ class Crawl
           continue;
 
           $links = $this->_getLinksFromUrl($link);
+
           $this->urls[$link] = array('depth' => $i, 'links' => $links);
           foreach ($links as $l)
           {
