@@ -61,7 +61,7 @@ function scrollToId(id)
 function displayPie(id)
 {
     var pieElement = $('#'+id).find('.pieData');
-    var pieValue = parseFloat(pieElement.attr('rel'));
+    var pieValue = parseFloat(pieElement.attr('rel')).toFixed(2);
     var otherValue = (100 - pieValue);
     var pieData = [
 	{
