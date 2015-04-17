@@ -4,7 +4,7 @@ abstract class Controller
 {
   public $view = 'home';
 
-  static $media = array('css' => array('home'), 'js' => array());
+  static $media = array('css' => array(), 'js' => array());
   static $viewVars = array();
 
   public function init()

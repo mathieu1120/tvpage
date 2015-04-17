@@ -44,7 +44,7 @@ function informUser(text, id)
     var status = $('#crawler-status');
     var lt = /</g, gt = />/g, ap = /'/g, ic = /"/g;
     text = text.replace(lt, "&lt;").replace(gt, "&gt;").replace(ap, "&#39;").replace(ic, "&#34;");
-    status.append('<p>'+text+(id != undefined ? ' <span class="js-link" rel="'+id+'">Scroll to result</span>': '')+'</p>');
+    status.append('<p class="row">'+text+(id != undefined ? ' <span class="js-link" rel="'+id+'">Scroll to result</span>': '')+'</p>');
 }
 
 function displayLinks(id, data)

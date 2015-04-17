@@ -1,89 +1,13 @@
-#crawler-form
-{
-    width: 360px;
-    font-size: 0;
-    display: inline-block;
-    vertical-align: top;
-}
-
-label
-{
-    width: 100px;
-    display: inline-block;
-    font-size: 15px;
-}
-
-select
-{
-    width: 257px;
-    height: 35px;
-    margin: 5px 0;
-}
-
-input
-{
-    margin: 5px 0;
-    height: 25px;
-}
-
-input[type="text"]
-{
-    width: 250px;
-}
-
-input[type="submit"]
-{
-    margin-left: 100px;
-}
-
 #crawler-status
 {
-    margin-left: 50px;
-    border: 1px solid black;
-    border-radius: 3px;
-    width: 500px;
-    display: inline-block;
-    height: 120px;
+    height: 170px;
     overflow: auto;
-    padding: 5px;
 }
 
-#crawler-status p
+.panel-body
 {
-    margin: 0;
-    font-size: 13px;
-}
-
-#crawler-results
-{
-    min-height: 400px;
-    width: 100%;
-    display: block;
-}
-
-ul
-{
-    margin: 0;
-    padding: 0;
-}
-
-ul li
-{
-    margin-bottom: 15px;
-}
-
-ul li i
-{
-    font-size: 13px;
-}
-
-.result-block
-{
-    border: 1px solid #eee;
-    margin-bottom: 20px;
-    height: 300px;
-    overflow: auto;
-    padding: 5px;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .js-link
@@ -99,9 +23,8 @@ ul li i
 
 .canvas-div
 {
-    width: 300px;
+    width: 320px;
     height: 250px;
-    float: right;
 }
 
 .canvas-div span
