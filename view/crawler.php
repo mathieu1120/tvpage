@@ -1,5 +1,5 @@
 <div class="row">
-  <div id="crawler-form" class="col-md-6">
+  <div id="crawler-form" class="col-sm-6">
     <form action="./" method="POST" onsubmit="return processCrawlerURL();" class="form-horizontal" >
       <div class="form-group">
         <label class="col-sm-3 control-label">Previous Search:</label>
@@ -31,7 +31,7 @@
       </div>
     </form>
   </div>
-  <div id="crawler-status" class="col-md-6 well">
+  <div id="crawler-status" class="col-sm-6 well">
   </div>
 </div>
 <hr/>
