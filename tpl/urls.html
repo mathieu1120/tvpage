@@ -1,0 +1,28 @@
+<div class="row panel panel-default result-block">
+  <div class="panel-heading">{{given_url|e}} - Depth: {{given_depth|e}}
+    <span class="pull-right">{{page_visited|e}} page{{page_visited == 1 ? '' : 's'}} visited.</span>
+  </div>
+  <div class="panel-body">
+    <div class="row"><div class="col-sm-8">
+      <ul class="list-group">
+        {%for url, details in urls%}
+        <li class="list-group-item">{{url|e}} - Link Depth: {{details.depth|e}}<br/>
+          {% if details.links%}
+          <select class="form-control"><option>URL in {{url|e}}</option>
+            {%for link in details.links%}
+            <option value="{{link|e}}">{{link|e}}</option>
+            {%endfor%}
+          </select>
+          {%else%}
+          <i>No "a" tag with valid "href" attributes were found on that page.<br/>The page can also be a redirection page.<br/>The page might not exist.</i>
+          {%endif%}
+        </li>
+        {%endfor%}
+      </ul>
+    </div>
+    <div class="canvas-div col-sm-4 pull-right">Domain name Presence:
+      <canvas class="canvas"></canvas>
+    </div>
+    </div>
+    <div class="pieData" rel="{{percent|e}}">{{host|e}}</div>
+  </div>

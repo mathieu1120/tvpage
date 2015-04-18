@@ -19,9 +19,9 @@ class CrawlerController extends Controller
     $crawl = new Crawl($url, $depth);
     $crawl->getAllLinks();
 
-    self::$viewVars['given-url'] = $url;
-    self::$viewVars['given-depth'] = $depth;
-    self::$viewVars['page-visited'] = $crawl->pageVisited;
+    self::$viewVars['given_url'] = $url;
+    self::$viewVars['given_depth'] = $depth;
+    self::$viewVars['page_visited'] = $crawl->pageVisited;
     self::$viewVars['urls'] = $crawl->urls;
     self::$viewVars['domains'] = $crawl->domains;
 
