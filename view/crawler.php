@@ -6,7 +6,7 @@
         <div class="col-sm-9">
           <select id="previous-url" class="form-control"><option>Select...</option>
             <?php
-            foreach ($viewVars['previous_url'] as $url)
+            foreach ($this->viewVars['previous_url'] as $url)
             echo '<option value="'.dp($url).'">'.dp($url).'</option>';
             ?>
           </select>

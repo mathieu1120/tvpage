@@ -4,7 +4,6 @@ abstract class Controller
 {
   public $view = 'home';
 
-  static $media = array('css' => array(), 'js' => array());
   static $viewVars = array();
 
   public function init()
@@ -18,8 +17,8 @@ abstract class Controller
 
   public function display($view = null, $dir = VIEW_DIR)
   {
-    self::$viewVars['media'] = self::$media;
-    $viewVars = self::$viewVars;
-    require($dir.($view ? $view : $this->view).'.php');
+    $tpl = new Template();
+    $tpl->viewVars = self::$viewVars;
+    echo $tpl->render($dir.($view ? $view : $this->view).'.php');
   }
 }

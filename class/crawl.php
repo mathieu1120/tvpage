@@ -134,28 +134,4 @@ class Crawl
       $i++;
     }
   }
-
-  /*
-  // pre- order algorithme
-  public function getAllLinks($url = '', $depth = 0)
-  {
-  //if (self::MAX_PAGE_VISITED < $this->pageVisited)
-  //return false;
-  
-  if (!$url)
-  $url = $this->url;
-  
-  if ($depth > $this->depth)
-  return false;
-  
-  if (!isset($this->urls[$url]['depth']) || $this->urls[$url]['depth'] > $depth)
-  $this->urls[$url]['depth'] = $depth;
-  if (!isset($this->urls[$url]['links']))
-  $this->urls[$url]['links'] = $this->_getLinksFromUrl($url);
-  
-  foreach ($this->urls[$url]['links'] as $link)
-  $this->getAllLinks($link, $depth + 1);
-  return true;
-  }
-   */
 }

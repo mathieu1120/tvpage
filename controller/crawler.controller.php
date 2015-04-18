@@ -2,12 +2,6 @@
 
 class CrawlerController extends Controller
 {
-  public function init()
-  {
-    self::$media['js'][] = 'crawler';
-    self::$media['js'][] = 'Chart.min';
-    self::$media['css'][] = 'crawler';
-  }
 
   public function run()
   {
@@ -30,6 +24,20 @@ class CrawlerController extends Controller
     self::$viewVars['page-visited'] = $crawl->pageVisited;
     self::$viewVars['urls'] = $crawl->urls;
     self::$viewVars['domains'] = $crawl->domains;
+
+
+    $highest = array_sum($crawl->domains);
+    $percent = 0;
+    $host = '';
+    $parts = parse_url($url);
+    if (isset($parts['host']) && $parts['host'] && isset($crawl->domains[$parts['host']]))
+    {
+      $percent = $crawl->domains[$parts['host']] * 100 / $highest;
+      $host = $parts['host'];
+    }
+    self::$viewVars['percent'] = $percent;
+    self::$viewVars['host'] = $host;
+
     parent::display('urls');
   }
 
